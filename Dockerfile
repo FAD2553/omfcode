@@ -35,7 +35,9 @@ RUN mkdir -p database storage/framework/{cache,sessions,views} \
     && touch database/database.sqlite \
     && npm run build \
     && php artisan key:generate \
-    && php artisan optimize:clear \
+    && php artisan config:clear \
+    && php artisan route:clear \
+    && php artisan view:clear \
     && chmod -R 775 storage bootstrap/cache
 
 EXPOSE 8000
