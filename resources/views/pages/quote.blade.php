@@ -71,11 +71,11 @@
             <select name="budget"
               class="w-full px-4 py-3 rounded-xl bg-surface border border-line focus:border-brand focus:ring-1 focus:ring-brand outline-none transition">
               <option value="">Non défini</option>
-              <option value="< 500€">Moins de 500€</option>
-              <option value="500-2000€">500€ – 2 000€</option>
-              <option value="2000-5000€">2 000€ – 5 000€</option>
-              <option value="5000-15000€">5 000€ – 15 000€</option>
-              <option value="> 15000€">Plus de 15 000€</option>
+              <option value="< 500€">Moins de 500.000 FCFA</option>
+              <option value="500-2000€">500.000 FCFA – 1 000.000 FCFA</option>
+              <option value="2000-5000€">2 000.000 FCFA – 5 000.000 FCFA</option>
+              <option value="5000-15000€">5 000.000 FCFA – 15 000.000 FCFA</option>
+              <option value="> 15000€">Plus de 15 000.000 FCFA</option>
             </select>
           </div>
         </div>

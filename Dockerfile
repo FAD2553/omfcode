@@ -15,18 +15,7 @@ WORKDIR /var/www/html
 
 COPY . .
 
-RUN echo "APP_NAME=OMF" > .env \
-    && echo "APP_ENV=production" >> .env \
-    && echo "APP_DEBUG=false" >> .env \
-    && echo "APP_URL=http://localhost" >> .env \
-    && echo "LOG_CHANNEL=stack" >> .env \
-    && echo "DB_CONNECTION=sqlite" >> .env \
-    && echo "DB_DATABASE=/var/www/html/database/database.sqlite" >> .env \
-    && echo "SESSION_DRIVER=database" >> .env \
-    && echo "QUEUE_CONNECTION=database" >> .env \
-    && echo "CACHE_STORE=database" >> .env \
-    && echo "MAIL_MAILER=log" >> .env \
-    && composer install --no-interaction --prefer-dist --optimize-autoloader
+RUN composer install --no-interaction --prefer-dist --optimize-autoloader
 
 COPY package.json package-lock.json ./
 RUN npm install
