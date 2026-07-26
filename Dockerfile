@@ -1,6 +1,6 @@
 # syntax=docker/dockerfile:1
 
-FROM php:8.3-cli
+FROM php:8.4-cli
 
 RUN apt-get update \
     && apt-get install -y --no-install-recommends git unzip libzip-dev libicu-dev libonig-dev zlib1g-dev libpq-dev libsqlite3-dev curl ca-certificates gnupg \
