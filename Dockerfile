@@ -22,8 +22,17 @@ RUN npm install
 
 RUN mkdir -p database storage/framework/{cache,sessions,views} \
     && touch database/database.sqlite \
-    && printf '%s
-' 'APP_NAME=OMF' 'APP_ENV=production' 'APP_DEBUG=false' 'APP_URL=http://localhost' 'LOG_CHANNEL=stack' 'DB_CONNECTION=sqlite' 'DB_DATABASE=/var/www/html/database/database.sqlite' 'SESSION_DRIVER=database' 'QUEUE_CONNECTION=database' 'CACHE_STORE=database' 'MAIL_MAILER=log' > .env \
+    && echo "APP_NAME=OMF" > .env \
+    && echo "APP_ENV=production" >> .env \
+    && echo "APP_DEBUG=false" >> .env \
+    && echo "APP_URL=http://localhost" >> .env \
+    && echo "LOG_CHANNEL=stack" >> .env \
+    && echo "DB_CONNECTION=sqlite" >> .env \
+    && echo "DB_DATABASE=/var/www/html/database/database.sqlite" >> .env \
+    && echo "SESSION_DRIVER=database" >> .env \
+    && echo "QUEUE_CONNECTION=database" >> .env \
+    && echo "CACHE_STORE=database" >> .env \
+    && echo "MAIL_MAILER=log" >> .env \
     && npm run build \
     && php artisan key:generate \
     && php artisan config:clear \
