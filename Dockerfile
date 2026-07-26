@@ -13,7 +13,8 @@ COPY --from=composer:2.9 /usr/bin/composer /usr/bin/composer
 
 WORKDIR /var/www/html
 
-COPY composer.json composer.lock ./
+COPY . .
+
 RUN echo "APP_NAME=OMF" > .env \
     && echo "APP_ENV=production" >> .env \
     && echo "APP_DEBUG=false" >> .env \
@@ -29,8 +30,6 @@ RUN echo "APP_NAME=OMF" > .env \
 
 COPY package.json package-lock.json ./
 RUN npm install
-
-COPY . .
 
 RUN npm run build \
     && php artisan key:generate \
