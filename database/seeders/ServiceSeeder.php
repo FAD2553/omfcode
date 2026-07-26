@@ -63,14 +63,23 @@ class ServiceSeeder extends Seeder
         foreach ($categories as $catData) {
             $services = $catData['services'];
             unset($catData['services']);
-            $catData['slug'] = Str::slug($catData['name']);
-            
-            $category = ServiceCategory::create($catData);
+            $slug = Str::slug($catData['name']);
+            $catData['slug'] = $slug;
+
+            $category = ServiceCategory::firstOrCreate(
+                ['slug' => $slug],
+                $catData,
+            );
 
             foreach ($services as $srvData) {
-                $srvData['slug'] = Str::slug($srvData['title']);
+                $slug = Str::slug($srvData['title']);
+                $srvData['slug'] = $slug;
                 $srvData['content'] = '<p>Détails à venir pour le service <strong>' . $srvData['title'] . '</strong>. Vous pouvez modifier ce contenu via le panneau d\'administration.</p>';
-                $category->services()->create($srvData);
+
+                $category->services()->firstOrCreate(
+                    ['slug' => $slug],
+                    $srvData,
+                );
             }
         }
     }
