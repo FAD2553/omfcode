@@ -22,6 +22,8 @@ RUN npm install
 
 RUN mkdir -p database storage/framework/{cache,sessions,views} \
     && touch database/database.sqlite \
+    && printf '%s
+' 'APP_NAME=OMF' 'APP_ENV=production' 'APP_DEBUG=false' 'APP_URL=http://localhost' 'LOG_CHANNEL=stack' 'DB_CONNECTION=sqlite' 'DB_DATABASE=/var/www/html/database/database.sqlite' 'SESSION_DRIVER=database' 'QUEUE_CONNECTION=database' 'CACHE_STORE=database' 'MAIL_MAILER=log' > .env \
     && npm run build \
     && php artisan key:generate \
     && php artisan config:clear \
