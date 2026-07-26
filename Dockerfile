@@ -31,10 +31,11 @@ RUN echo "APP_NAME=OMF" > .env \
 COPY package.json package-lock.json ./
 RUN npm install
 
-RUN npm run build \
+RUN mkdir -p database storage/framework/{cache,sessions,views} \
+    && touch database/database.sqlite \
+    && npm run build \
     && php artisan key:generate \
     && php artisan optimize:clear \
-    && mkdir -p storage/framework/{cache,sessions,views} \
     && chmod -R 775 storage bootstrap/cache
 
 EXPOSE 8000
