@@ -14,11 +14,19 @@ COPY --from=composer:2.9 /usr/bin/composer /usr/bin/composer
 WORKDIR /var/www/html
 
 COPY composer.json composer.lock ./
-RUN cp .env.example .env \
-    && sed -i 's/^APP_ENV=.*/APP_ENV=production/' .env \
-    && sed -i 's/^APP_DEBUG=.*/APP_DEBUG=false/' .env \
-    && sed -i 's/^APP_URL=.*/APP_URL=http:\/\/localhost/' .env \
-    && printf '\nDB_CONNECTION=sqlite\nDB_DATABASE=/var/www/html/database/database.sqlite\n' >> .env \
+RUN printf '%s
+' \
+    'APP_NAME=OMF' \
+    'APP_ENV=production' \
+    'APP_DEBUG=false' \
+    'APP_URL=http://localhost' \
+    'LOG_CHANNEL=stack' \
+    'DB_CONNECTION=sqlite' \
+    'DB_DATABASE=/var/www/html/database/database.sqlite' \
+    'SESSION_DRIVER=database' \
+    'QUEUE_CONNECTION=database' \
+    'CACHE_STORE=database' \
+    'MAIL_MAILER=log' > .env \
     && composer install --no-interaction --prefer-dist --optimize-autoloader
 
 COPY package.json package-lock.json ./
