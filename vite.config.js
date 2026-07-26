@@ -20,5 +20,8 @@ export default defineConfig({
         watch: {
             ignored: ['**/storage/framework/views/**'],
         },
+        allowedHosts: [
+            'unsteadfastly-uncomputed-alfred.ngrok-free.dev',
+        ],
     },
 });
