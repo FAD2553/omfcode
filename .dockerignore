@@ -8,6 +8,9 @@ yarn-error.log*
 .gitignore
 .idea
 .vscode
+.env
+.env.*
+!.env.example
 storage/framework/cache/*
 storage/framework/sessions/*
 storage/framework/views/*

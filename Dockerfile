@@ -14,7 +14,12 @@ COPY --from=composer:2.9 /usr/bin/composer /usr/bin/composer
 WORKDIR /var/www/html
 
 COPY composer.json composer.lock ./
-RUN composer install --no-interaction --prefer-dist --optimize-autoloader
+RUN cp .env.example .env \
+    && sed -i 's/^APP_ENV=.*/APP_ENV=production/' .env \
+    && sed -i 's/^APP_DEBUG=.*/APP_DEBUG=false/' .env \
+    && sed -i 's/^APP_URL=.*/APP_URL=http:\/\/localhost/' .env \
+    && printf '\nDB_CONNECTION=sqlite\nDB_DATABASE=/var/www/html/database/database.sqlite\n' >> .env \
+    && composer install --no-interaction --prefer-dist --optimize-autoloader
 
 COPY package.json package-lock.json ./
 RUN npm install
@@ -22,7 +27,6 @@ RUN npm install
 COPY . .
 
 RUN npm run build \
-    && cp .env.example .env \
     && php artisan key:generate \
     && php artisan optimize:clear \
     && mkdir -p storage/framework/{cache,sessions,views} \
