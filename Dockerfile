@@ -3,7 +3,9 @@
 FROM php:8.3-cli
 
 RUN apt-get update \
-    && apt-get install -y --no-install-recommends git unzip libzip-dev libicu-dev libonig-dev zlib1g-dev libpq-dev libsqlite3-dev curl \
+    && apt-get install -y --no-install-recommends git unzip libzip-dev libicu-dev libonig-dev zlib1g-dev libpq-dev libsqlite3-dev curl ca-certificates gnupg \
+    && curl -fsSL https://deb.nodesource.com/setup_20.x | bash - \
+    && apt-get install -y nodejs \
     && docker-php-ext-install pdo pdo_pgsql pdo_sqlite intl zip \
     && rm -rf /var/lib/apt/lists/*
 
@@ -12,7 +14,7 @@ COPY --from=composer:2.9 /usr/bin/composer /usr/bin/composer
 WORKDIR /var/www/html
 
 COPY composer.json composer.lock ./
-RUN composer install --no-interaction --prefer-dist --optimize-autoloader --no-dev
+RUN composer install --no-interaction --prefer-dist --optimize-autoloader
 
 COPY package.json package-lock.json ./
 RUN npm install
@@ -22,6 +24,7 @@ COPY . .
 RUN npm run build \
     && cp .env.example .env \
     && php artisan key:generate \
+    && php artisan optimize:clear \
     && mkdir -p storage/framework/{cache,sessions,views} \
     && chmod -R 775 storage bootstrap/cache
 
